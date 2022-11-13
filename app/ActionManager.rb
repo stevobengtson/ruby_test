@@ -13,35 +13,6 @@ class ActionManager
             self.order(action)
         end
     end
-
-    def report
-        @dataManager.customers.sort_by { |customer| customer.name }.each do |customer|
-            output = "#{customer.name}: "
-            output += 'n/a' if customer.orders.empty?
-
-            orders = {}
-            totalPrice = 0
-            customer.orders.sort_by { |order| order.product.name }.each do |order|
-                if orders.key?(order.product.name)
-                    orders[order.product.name] += order.product.price * order.quantity
-                else
-                    orders[order.product.name] = order.product.price * order.quantity
-                end
-
-                totalPrice += order.product.price * order.quantity
-            end
-
-            if totalPrice > 0
-                orders.each do |product_name, total_price|
-                    output += "#{product_name} - $#{total_price}, "
-                end
-
-                output += " | Average Order Value: $" + (totalPrice / orders.count).to_s
-            end
-            
-            p output
-        end
-    end
    
     private
 

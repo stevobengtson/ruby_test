@@ -6,16 +6,7 @@ Action = Struct.new(:type, :customer, :product, :quantity, :price) do
 end
 
 class LineActionParser
-    def initialize(manager)
-        @manager = manager
-    end
-
-    def parse(line)
-        action = self.parseAction(line)
-        @manager.process(action)
-    end
-
-    def parseAction(line)
+    def self.parse(line)
         case line
         when /^register\s+(\w+)\s+\$?(-?\d+\.\d{0,2})/i
             Action.new(Action::TYPE_REGISTER, nil, $1, nil, $2.to_f)
